@@ -1,0 +1,28 @@
+{% extends "blog/base.html" %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="content-section">
+    <div class="media">
+      <img class="rounded-circle account-img" src="{{user.profile.image.url}}">
+      <!-- we need to add media routes to the url patterns -->
+      <div class="media-body">
+        <h2 class="account-heading">{{user.username}}</h2>
+        <p class="text-secondary">{{user.email}}</p>
+      </div>
+    </div>
+    <!-- add special encoding type to form in order for form to pass image data of profile pic properly -->
+    <form method="POST" enctype="multipart/form-data">
+        <!-- csrf token, it is a hidden tag, protects against attacks -->
+            {% csrf_token %}
+            <fieldset class="form-group">
+                <legend class="border-bottom mb-4">PROFILE INFO</legend>
+                {{ u_form | crispy }}
+                {{ p_form | crispy }}
+            </fieldset>
+            <div class="form-group">
+                <button class="btn btn-outline-info mb-2" type="submit">UPDATE</button>
+            </div>
+        </form>
+    <!-- FORM HERE -->
+  </div>
+{% endblock content %}
